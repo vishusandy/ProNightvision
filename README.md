@@ -23,7 +23,7 @@ In the nightvision menu you can:
 
 Download nightivision templates and put them in the `materials` folder.
 
-For example, download GAMMACASE's nightvision templates, [https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision], and put them somehwere like `materials/gammecase/nightvision/`.
+For example, download GAMMACASE's nightvision templates, [https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision](https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision) , and put them somehwere like `materials/gammecase/nightvision/`.
 
 Create a new database named `pro_nightvision`.  Code for MySQL:
 
@@ -61,7 +61,7 @@ Add the following to your `cstrike/addons/sourcemod/configs/databases.cfg`, subs
 
 Copy the .smx file to the plugins folder (e.g. `cstrike/addons/sourcemod/plugins`) and load the file using `sm plugins load`.
 
-Based on GAMMACASE's plugin: [https://github.com/GAMMACASE/NightVision]
+Based on GAMMACASE's plugin: https://github.com/GAMMACASE/NightVision
 
-Custom nightvision templates: [https://github.com/GAMMACASE/NightVision#creating-custom-templates]
+Custom nightvision templates: https://github.com/GAMMACASE/NightVision#creating-custom-templates
 
