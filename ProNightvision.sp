@@ -91,7 +91,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     CreateNative("ProNightvision_DisplayNightvision", Native_DisplayNightvision);
     CreateNative("ProNightvision_GetFilterId", Native_GetFilterId);
     CreateNative("ProNightvision_SetFilter", Native_SetFilter);
-    // CreateNative("ProNightvision_SetFilterName", Native_SetFilterName);
     CreateNative("ProNightvision_ResetFilter", Native_ResetFilter);
     CreateNative("ProNightvision_ListFilters", Native_ListFilters);
 }
@@ -175,7 +174,7 @@ public void OnClientDisconnect(int client) {
 
 public void DbConnCallback(Database database, const char[] error, any data) {
     if(strlen(error) > 0) {
-        LogAction(-1, -1, "Database connection error: %s", error);
+        LogAction(-1, -1, "Skipping custom filters.  Database not connected: %s", error);
         return;
     }
     db = database;
@@ -215,7 +214,7 @@ public void LoadFiltersCallback(Database d, DBResultSet result, const char[] err
 
 
 
-
+// ensure each player can only see their own nightvision light
 public Action CCTransmitHook(int entity, int client) {
     SetEdictFlags(entity, GetEdictFlags(entity) & ~FL_EDICT_ALWAYS);
     if(EntRefToEntIndex(entities[client][0]) != entity) {
@@ -244,7 +243,6 @@ public Action NightvisionCommand(int client, int args) {
     }
     return Plugin_Continue;
 }
-
 
 public bool custom_nightvision(int client) {
     remove_cc(client);
@@ -498,23 +496,6 @@ public int Native_SetFilter(Handle plugin, int numParams) {
         return custom_nightvision(client);
     }
     return true;
-    
-    
-    // int filter_index = filter_id;
-    // // int filter_index = get_filter_index(filter_id);
-    // if(filter_index < 0 || filter_index > filter_list.Length) {
-    //     filter_index = 0;
-    // }
-    // player_cc[client].filter_id = filter_index;
-    // if(player_cc[client].on) {
-    //     remove_cc(client);
-    //     if(filter_id == NV_NORMAL) {
-    //         normal_nightvision(client, true);
-    //     } else if(filter_id > NV_NORMAL && filter_id <= filter_list.Length) {
-    //         create_cc(client, filter_id-1);
-    //     }
-    // }
-    // return filter_id >= NV_NORMAL && filter_id <= filter_list.Length;
 }
 
 public int find_filter_id(const char[] name) {
@@ -543,35 +524,6 @@ public int Native_GetFilterId(Handle plugin, int numParams) {
     return find_filter_id(name);
 }
 
-// public int Native_SetFilterName(Handle plugin, int numParams) {
-    // int client = GetNativeCell(1);
-    // int len;
-    // GetNativeStringLength(2, len);
-    // if(len <= 0) {
-    //     LogAction(-1, -1, "empty - setting normal nv");
-    // }
-    // char[] name = new char[len+1];
-    // GetNativeString(2, name, len+1);
-    // StringToLower(name);
-    
-    
-    
-    // if(StrEqual(name, "normal", false) || StrEqual(name, "on", false)) {
-    //     LogAction(-1, -1, "setting normal nv");
-    //     normal = true;
-    // }
-    
-    // if(normal) {
-    //     player_cc[client].filter_id = NV_NORMAL;
-    // } else {
-    //     if(!filter_names.GetValue(name, filter_index) || filter_index < 0 || filter_index >= filter_list.Length) {
-    //         return false;
-    //     }
-    //     LogAction(-1, -1, "found filter index %i", filter_index);
-    //     player_cc[client].filter_id = filter_index + 1;
-    // }
-//     return custom_nightvision(client);
-// }
 public int Native_ResetFilter(Handle plugin, int numParams) {
     int client = GetNativeCell(1);
     player_cc[client].filter_id = NV_NORMAL;
@@ -585,6 +537,8 @@ public int Native_ListFilters(Handle plugin, int numParams) {
     
     ReplyToCommand(client, "\x07ffffffFilters:\x01");
     
+    // list filters, appending each filter to the line and not exceeding MAX_LINE_LEN
+    // print the line when full or at the end of the list
     for(int i=0; i < filter_list.Length; i++) {
         CCFilter cur_filter;
         filter_list.GetArray(i, cur_filter);
@@ -606,11 +560,6 @@ public int Native_ListFilters(Handle plugin, int numParams) {
     ReplyToCommand(client, "%s", buffer);
 }
 
-
-
-// int get_filter_index(int filter_id) {
-//     return filter_list.FindValue(filter_id, 0);
-// }
 
 void StringToLower(char[] string) {
     int len = strlen(string);

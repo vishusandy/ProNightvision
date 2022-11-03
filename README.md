@@ -1,6 +1,8 @@
 # Pro Nightvision
 
-A custom nightvision plugin for Counter-Strike Source and Sourcemod.  Based off of [GAMMACASE's NightVision](https://github.com/GAMMACASE/NightVision) plugin.  I have not tested this with CSGO.
+A custom nightvision plugin for Counter-Strike Source and Sourcemod.  Based off of [GAMMACASE's NightVision](https://github.com/GAMMACASE/NightVision) plugin.  I have only tested this with Counter-Strike Source, but may work with CSGO (if you are willing to help test let me know).
+
+Custom nightvision filters allows adjustments to how nightvision goggles work by applying an adjustment over the player's screen.  Custom nightvision filters (`.raw` files) can be added by adding a database entry for them.  A database is not required if no custom nightvision filters are desired.
 
 ## Features
 
@@ -23,9 +25,15 @@ A custom nightvision plugin for Counter-Strike Source and Sourcemod.  Based off 
 
 ## Installation
 
-1. Download nightvision templates and put them in the `materials` folder.  This plugin does not currently come with any templates (and no templates are required to use it).
+1. Copy the .SMX file to the `cstrike/addons/sourcemod/plugins` folder
+
+### Installing Custom Filters
+
+Optionally, custom nightvision filters can be added.  The files will be stored in the `materials` folder and the filters you want to allow players to use will be specified in a database.
+
+1. Download nightvision templates and put them in the `cstrike/materials` folder.  This plugin does not currently come with any templates (and no templates are required to use it).
    
-   For example, download GAMMACASE's nightvision templates, [https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision](https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision) , and put them somewhere like `materials/gammecase/nightvision/`.
+   For example, download GAMMACASE's nightvision templates, [https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision](https://github.com/GAMMACASE/NightVision/tree/master/materials/gammacase/nightvision) , and put them somewhere like `cstrike/materials/gammecase/nightvision/`.
    
    Custom nightvision templates: https://github.com/GAMMACASE/NightVision#creating-custom-templates
 
@@ -38,6 +46,12 @@ CREATE TABLE `pro_nightvision` (
   `name` varchar(64) NOT NULL,
   `file` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `pro_nightvision`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `pro_nightvision`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ```
 
 3. Insert a record into the database for each filter (menu order determined by `ordering` field).  For example, when using GAMMACASE's filters you can use something like:

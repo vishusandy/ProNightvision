@@ -21,7 +21,6 @@ public void __pl_pro_nightvision_SetNTVOptional()
     MarkNativeAsOptional("ProNightvision_DisplayNightvision");
     MarkNativeAsOptional("ProNightvision_GetFilterId");
     MarkNativeAsOptional("ProNightvision_SetFilter");
-    // MarkNativeAsOptional("ProNightvision_SetFilterName");
     MarkNativeAsOptional("ProNightvision_ResetFilter");
     MarkNativeAsOptional("ProNightvision_ListFilters");
 }
@@ -77,9 +76,5 @@ native bool ProNightvision_ResetFilter(int client);
  */
 native void ProNightvision_ListFilters(int client);
 
-// native bool ProNightvision_SetFilterName(int client, const char[] name);
-
-// native bool ProNightvision_HasFilterID(int filter_id);
-// native int ProNightvision_NumFilters();
 
 
