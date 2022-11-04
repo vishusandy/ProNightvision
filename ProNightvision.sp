@@ -7,7 +7,7 @@
 #define REQUIRE_PLUGIN
 
 // Based on GAMMA CASE's plugin: http://steamcommunity.com/id/_GAMMACASE_/
-public Plugin myinfo = { name = "Pro Nightvision", author = "Vishus", description = "Custom nightivision plugin", version = "0.1.0", url = "" };
+public Plugin myinfo = { name = "Pro Nightvision", author = "Vishus", description = "Custom nightivision plugin", version = "0.1.0", url = "https://github.com/vishusandy/ProNightvision" };
 
 #define INTENSITY_INCREMENT 0.2
 #define MAX_LINE_LEN 106
