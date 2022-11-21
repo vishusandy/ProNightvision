@@ -4,6 +4,11 @@ A custom nightvision plugin for Counter-Strike Source and Sourcemod.  Based off 
 
 Custom nightvision filters allows adjustments to how nightvision goggles work by applying an adjustment over the player's screen.  Custom nightvision filters (`.raw` files) can be added by adding a database entry for them.  A database is not required if no custom nightvision filters are desired.
 
+## Screenshots
+
+Nightvision menu:
+![Nightvision menu](nightvision.png)
+
 ## Features
 
 - Reactivates nightvision on respawn
